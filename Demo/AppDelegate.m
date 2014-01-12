@@ -7,12 +7,35 @@
 //
 
 #import "AppDelegate.h"
-
+#import "MMDrawerController.h"
+#import "LeftViewController.h"
 @implementation AppDelegate
-
+@synthesize window;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    LeftViewController * leftDrawer = [[LeftViewController alloc] init];
+    leftDrawer.view.backgroundColor = [UIColor blackColor];
+    UIViewController * center = [[UIViewController alloc] init];
+    center.view.backgroundColor = [UIColor yellowColor];
+    UIViewController * rightDrawer = [[UIViewController alloc] init];
+    rightDrawer.view.backgroundColor = [UIColor greenColor];
+    
+    MMDrawerController * drawerController = [[MMDrawerController alloc]
+                                             initWithCenterViewController:center
+                                             leftDrawerViewController:leftDrawer
+                                             rightDrawerViewController:rightDrawer];
+    
+    [drawerController setMaximumRightDrawerWidth:200];
+    [drawerController setMaximumLeftDrawerWidth:200];
+
+    [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    
+    window.rootViewController = drawerController;
+    [window makeKeyAndVisible];
     return YES;
 }
 							
